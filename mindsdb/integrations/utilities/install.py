@@ -1,5 +1,6 @@
 import sys
 import subprocess
+from security import safe_command
 
 
 def install_dependencies(dependencies):
@@ -10,8 +11,7 @@ def install_dependencies(dependencies):
         'error_message': None
     }
     try:
-        sp = subprocess.Popen(
-            [sys.executable, '-m', 'pip', 'install', *dependencies],
+        sp = safe_command.run(subprocess.Popen, [sys.executable, '-m', 'pip', 'install', *dependencies],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
